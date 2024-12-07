@@ -3724,8 +3724,8 @@ a {
   color: #000000;
 }
 .cid-uk7kboJJhn {
-  padding-top: 6rem;
-  padding-bottom: 6rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   background-color: #edefeb;
 }
 .cid-uk7kboJJhn .item-wrapper {
@@ -3812,6 +3812,99 @@ a {
     height: 100%;
     object-fit: cover;
   }
+}
+.cid-uwiki1NgH8 {
+  padding-top: 5rem;
+  padding-bottom: 8rem;
+  background-color: #edefeb;
+}
+.cid-uwiki1NgH8 .item-wrapper {
+  margin-bottom: 2rem;
+}
+@media (max-width: 767px) {
+  .cid-uwiki1NgH8 .smallImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .cid-uwiki1NgH8 .largeImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .cid-uwiki1NgH8 .largeImage .item {
+    margin-bottom: 2rem;
+  }
+  .cid-uwiki1NgH8 .item-wrapper {
+    margin-bottom: 1rem;
+  }
+}
+@media (max-width: 767px) and (max-width: 767px) {
+  .cid-uwiki1NgH8 .largeImage .item {
+    margin-bottom: 1rem;
+  }
+}
+.cid-uwiki1NgH8 .mbr-fallback-image.disabled {
+  display: none;
+}
+.cid-uwiki1NgH8 .mbr-fallback-image {
+  display: block;
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+.cid-uwiki1NgH8 .mbr-description {
+  text-align: left;
+}
+.cid-uwiki1NgH8 .card-title,
+.cid-uwiki1NgH8 .iconfont-wrapper {
+  color: #000000;
+}
+.cid-uwiki1NgH8 .card-text {
+  color: #000000;
+}
+.cid-uwiki1NgH8 .mbr-section-title {
+  color: #000000;
+  text-align: center;
+}
+.cid-uwiki1NgH8 .mbr-number {
+  color: #9fe870;
+}
+.cid-uwiki1NgH8 .mbr-text,
+.cid-uwiki1NgH8 .mbr-section-btn {
+  text-align: center;
+}
+.cid-uwiki1NgH8 .card-text,
+.cid-uwiki1NgH8 .item .mbr-section-btn {
+  text-align: left;
+}
+.cid-uwiki1NgH8 .smallImage {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+@media (max-width: 992px) {
+  .cid-uwiki1NgH8 .smallImage {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.cid-uwiki1NgH8 .largeImage {
+  width: 100%;
+  height: 832px;
+  object-fit: cover;
+}
+@media (max-width: 992px) {
+  .cid-uwiki1NgH8 .largeImage {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+.cid-uwiki1NgH8 .row {
+  flex-direction: row-reverse;
 }
 .cid-uiGSiCV2dn {
   background-color: #ffffff;
@@ -6844,8 +6937,8 @@ a {
   text-align: left;
 }
 .cid-uiVQ5aJoub {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
+  padding-top: 0rem;
+  padding-bottom: 2rem;
   background-color: #0c2c68;
 }
 .cid-uiVQ5aJoub .social-row {
