@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="assets/theme/css/style.css">
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;700&display=swap&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;700&display=swap&display=swap"></noscript>
-  <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css?v=K8ZJB5"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css?v=K8ZJB5" type="text/css">
+  <link rel="preload" as="style" href="assets/mobirise/css/mbr-additional.css?v=vXGu3D"><link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css?v=vXGu3D" type="text/css">
 
 
 
@@ -109,7 +109,7 @@
 			<div class="item features-without-image col-12 col-md-6 col-lg-4">
 				<div class="item-wrapper">
 					<div class="item-content">
-						<h5 class="mbr-card-title mbr-fonts-style mt-0 mb-3 mbr-number display-1"><strong>53?</strong></h5>
+						<h5 class="mbr-card-title mbr-fonts-style mt-0 mb-3 mbr-number display-1"><strong>55?</strong></h5>
 						<h4 class="card-title mbr-fonts-style display-5">
 							<strong>Countries</strong></h4>
 						<p class="card-text mbr-fonts-style mt-0 mb-3 display-7">100+ to go!</p>
@@ -137,6 +137,135 @@
 	</div>
 </section>
 
+<section data-bs-version="5.1" class="header09 startm5 cid-v24PLe253l mbr-fullscreen" id="header09-2b">
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+
+            <div style="width: 100%; text-align: center; padding: 10px; font-style: italic; color: #555;">
+                <p>Map includes (most) visited countries. I have also visited <strong>Antarctica</strong>!</p>
+            </div>
+
+            <div id="travelMap" style="height: 90vh; width: 100vw;"></div>
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+            <script type="text/javascript">
+
+                // --- YOUR POPULATED COUNTRY LIST ---
+                const visitedData = [
+                    ["Canada", 4],
+                    ["Belize", 1],
+                    ["Guatemala", 1],
+                    ["Panama", 1],
+                    ["Aruba", 1],
+                    ["Curacao", 1],
+                    ["Dominican Republic", 2],
+                    ["Bahamas", 1],
+                    ["Barbados", 1],
+                    ["Argentina", 1],
+                    ["Saint Kitts and Nevis", 1],
+                    ["United Kingdom", 5],
+                    ["Ireland", 1],
+                    ["Portugal", 2],
+                    ["Spain", 2],
+                    ["France", 2],
+                    ["Morocco", 1],
+                    ["Belgium", 1],
+                    ["Netherlands", 1],
+                    ["Switzerland", 5],
+                    ["Italy", 2],
+                    ["Austria", 1],
+                    ["Germany", 6],
+                    ["Norway", 1],
+                    ["Czechia", 1],
+                    ["Poland", 2],
+                    ["Latvia", 1],
+                    ["Lithuania", 1],
+                    ["Slovakia", 1],
+                    ["Hungary", 1],
+                    ["Romania", 1],
+                    ["Bulgaria", 1],
+                    ["Greece", 3],
+                    ["Turkey", 1],
+                    ["Israel", 1],
+                    ["Jordan", 1],
+                    ["Thailand", 1],
+                    ["South Korea", 1],
+                    ["Japan", 1],
+                    ["South Africa", 1],
+                    ["Botswana", 1],
+                    ["Zimbabwe", 1],
+                    ["Zambia", 1],
+                    ["U.S. Virgin Islands", 2],
+                    ["Saint Martin", 1],
+                    ["Macao", 1],
+                    ["Puerto Rico", 2],
+                    ["United States", 1e9],
+                    ["Australia", 1],
+                    ["New Zealand", 1],
+                    ["Malta", 1],
+                    ["India", 1],
+                ];
+                // --- END OF LIST ---
+
+
+                google.charts.load('upcoming', {
+                    'packages': ['geochart'],
+                });
+                google.charts.setOnLoadCallback(drawRegionsMap);
+
+                function drawRegionsMap() {
+
+                    // This creates the 3-column data table
+                    const dataArray = [
+                        ['Country', 'ColorValue', {role: 'tooltip'}]
+                    ];
+
+                    // This processes your list
+                    visitedData.forEach(countryPair => {
+                        const countryName = countryPair[0];
+                        const visitCount = countryPair[1];
+                        const tooltipText = `Visits: ${visitCount}`;
+
+                        // We pass '1' for coloring, and the custom text for the tooltip
+                        dataArray.push([countryName, 1, tooltipText]);
+                    });
+
+                    const data = google.visualization.arrayToDataTable(dataArray);
+
+                    // --- Options for your SINGLE COLOR map ---
+                    const options = {
+                        backgroundColor: '#FFFFFF',
+                        datalessRegionColor: '#e0e0e0',  // Unvisited countries
+
+                        // These two lines force the single color
+                        defaultColor: '#ff4c4c',
+                        legend: 'none',
+
+                        tooltip: {
+                            trigger: 'focus',
+                            textStyle: { color: '#222222' },
+                            showColorCode: false
+                        }
+                    };
+
+                    const chartContainer = document.getElementById('travelMap');
+                    const chart = new google.visualization.GeoChart(chartContainer);
+                    chart.draw(data, options);
+
+                    window.addEventListener('resize', function() {
+                        chart.draw(data, options);
+                    });
+                }
+            </script>
+
+            </div>
+    </div>
+</section>
+
 <section data-bs-version="5.1" class="header14 cid-uiGRWUsdhe mbr-parallax-background" id="header14-18">
 
 
@@ -161,39 +290,64 @@
 <section data-bs-version="5.1" class="gallery3 cid-uKn4TChdvb" id="gallery03-27">
 
 
-    <div class="container">
+    <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-12 content-head">
           <div class="mbr-section-head mb-5">
             <h4 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2">
-              <strong>World Marathons [Athens, Berlin, London]&nbsp;&nbsp;</strong></h4>
+              <strong>World Marathons&nbsp; &nbsp;</strong></h4>
 
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="item features-image col-12 col-md-6 col-lg-4 active">
+        <div class="item features-image col-12 col-md-6 col-lg-3 active">
           <div class="item-wrapper">
             <div class="item-img">
-              <img src="assets/images/pxl-20221113-121702288-1158x1541.jpg" alt="Mobirise Website Builder" title="" data-slide-to="1" data-bs-slide-to="2">
+              <img src="assets/images/pxl-20221113-121702288-1158x1541.jpg" alt="Mobirise Website Builder" title="" data-slide-to="1" data-bs-slide-to="1">
             </div>
+            <div class="item-content align-left">
+              <h5 class="item-title mbr-fonts-style mt-3 mb-3 display-7">
+                <strong>Athens</strong></h5>
 
+            </div>
           </div>
         </div>
-        <div class="item features-image col-12 col-md-6 col-lg-4">
+        <div class="item features-image col-12 col-md-6 col-lg-3">
           <div class="item-wrapper">
             <div class="item-img">
-              <img src="assets/images/pxl-20240929-1247223292-1158x1860.jpg" alt="Mobirise Website Builder" title="" data-slide-to="2" data-bs-slide-to="1">
+              <img src="assets/images/pxl-20240929-1247223292-1158x1860.jpg" alt="Mobirise Website Builder" title="" data-slide-to="2" data-bs-slide-to="2">
             </div>
+            <div class="item-content align-left">
+              <h5 class="item-title mbr-fonts-style mt-3 mb-3 display-7">
+                <strong>Berlin</strong></h5>
 
+            </div>
           </div>
         </div>
-        <div class="item features-image col-12 col-md-6 col-lg-4">
+        <div class="item features-image col-12 col-md-6 col-lg-3">
           <div class="item-wrapper">
             <div class="item-img">
               <img src="assets/images/pxl-20250427-1424263852-1158x1265.jpg" alt="" title="" data-slide-to="3" data-bs-slide-to="3">
             </div>
+            <div class="item-content align-left">
+              <h5 class="item-title mbr-fonts-style mt-3 mb-3 display-7">
+                <strong>London</strong></h5>
 
+
+            </div>
+          </div>
+        </div><div class="item features-image col-12 col-md-6 col-lg-3">
+          <div class="item-wrapper">
+            <div class="item-img">
+              <img src="assets/images/pxl-20251012-174717334.mp2-1158x1538.jpg" alt="" title="" data-slide-to="4" data-bs-slide-to="4">
+            </div>
+            <div class="item-content align-left">
+              <h5 class="item-title mbr-fonts-style mt-3 mb-3 display-7">
+                <strong>Chicago</strong></h5>
+
+
+            </div>
           </div>
         </div>
 
@@ -251,7 +405,7 @@
         <div class="row justify-content-center">
             <div class="col-12 content-head">
                 <div class="mb-5">
-                    <h3 class="mbr-section-title mbr-fonts-style align-center m-0 display-2"><strong>my favorites from every continent</strong></h3>
+                    <h3 class="mbr-section-title mbr-fonts-style align-center m-0 display-2"><strong>7 continents</strong></h3>
 
                 </div>
             </div>
@@ -259,8 +413,8 @@
 
         <div class="row mbr-gallery">
             <div class="col-12 col-md-6 col-lg-3 item gallery-image">
-                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#uKn73CDgqg-modal" data-bs-target="#uKn73CDgqg-modal">
-                    <img class="w-100" src="assets/images/pxl-20240307-125026276-2-1158x810.jpg" alt="" data-slide-to="0" data-bs-slide-to="0" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg">
+                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#v24YIOajJl-modal" data-bs-target="#v24YIOajJl-modal">
+                    <img class="w-100" src="assets/images/pxl-20240307-125026276-2-1158x810.jpg" alt="" data-slide-to="0" data-bs-slide-to="0" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl">
                     <div class="icon-wrapper">
                         <span class="mobi-mbri mobi-mbri-search mbr-iconfont mbr-iconfont-btn"></span>
                     </div>
@@ -268,8 +422,8 @@
                 <h6 class="mbr-item-subtitle mbr-fonts-style align-center mb-0 mt-3 display-7">Antarctica</h6>
             </div>
             <div class="col-12 col-md-6 col-lg-3 item gallery-image">
-                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#uKn73CDgqg-modal" data-bs-target="#uKn73CDgqg-modal">
-                    <img class="w-100" src="assets/images/pxl-20241127-1637486163-512x384.jpg" alt="" data-slide-to="1" data-bs-slide-to="1" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg">
+                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#v24YIOajJl-modal" data-bs-target="#v24YIOajJl-modal">
+                    <img class="w-100" src="assets/images/pxl-20241127-1637486163-512x384.jpg" alt="" data-slide-to="1" data-bs-slide-to="1" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl">
                     <div class="icon-wrapper">
                         <span class="mobi-mbri mobi-mbri-search mbr-iconfont mbr-iconfont-btn"></span>
                     </div>
@@ -277,8 +431,8 @@
                 <h6 class="mbr-item-subtitle mbr-fonts-style align-center mb-0 mt-3 display-7">Africa</h6>
             </div>
             <div class="col-12 col-md-6 col-lg-3 item gallery-image">
-                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#uKn73CDgqg-modal" data-bs-target="#uKn73CDgqg-modal">
-                    <img class="w-100" src="assets/images/pxl-20240511-0537024242-1158x868.jpg" alt="" data-slide-to="2" data-bs-slide-to="2" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg">
+                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#v24YIOajJl-modal" data-bs-target="#v24YIOajJl-modal">
+                    <img class="w-100" src="assets/images/pxl-20240511-0537024242-1158x868.jpg" alt="" data-slide-to="2" data-bs-slide-to="2" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl">
                     <div class="icon-wrapper">
                         <span class="mobi-mbri mobi-mbri-search mbr-iconfont mbr-iconfont-btn"></span>
                     </div>
@@ -286,8 +440,8 @@
                 <h6 class="mbr-item-subtitle mbr-fonts-style align-center mb-0 mt-3 display-7">Asia</h6>
             </div>
             <div class="col-12 col-md-6 col-lg-3 item gallery-image">
-                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#uKn73CDgqg-modal" data-bs-target="#uKn73CDgqg-modal">
-                    <img class="w-100" src="assets/images/pxl-20230209-1143419362-1158x1544.jpg" alt="" data-slide-to="3" data-bs-slide-to="3" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg">
+                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#v24YIOajJl-modal" data-bs-target="#v24YIOajJl-modal">
+                    <img class="w-100" src="assets/images/pxl-20230209-1143419362-1158x1544.jpg" alt="" data-slide-to="3" data-bs-slide-to="3" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl">
                     <div class="icon-wrapper">
                         <span class="mobi-mbri mobi-mbri-search mbr-iconfont mbr-iconfont-btn"></span>
                     </div>
@@ -295,8 +449,8 @@
                 <h6 class="mbr-item-subtitle mbr-fonts-style align-center mb-0 mt-3 display-7">Asia+</h6>
             </div>
             <div class="col-12 col-md-6 col-lg-3 item gallery-image">
-                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#uKn73CDgqg-modal" data-bs-target="#uKn73CDgqg-modal">
-                    <img class="w-100" src="assets/images/screen-shot-2025-03-09-at-5.36.10-am2-1158x650.png" alt="" data-slide-to="4" data-bs-slide-to="4" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg">
+                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#v24YIOajJl-modal" data-bs-target="#v24YIOajJl-modal">
+                    <img class="w-100" src="assets/images/screen-shot-2025-03-09-at-5.36.10-am2-1158x650.png" alt="" data-slide-to="4" data-bs-slide-to="4" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl">
                     <div class="icon-wrapper">
                         <span class="mobi-mbri mobi-mbri-search mbr-iconfont mbr-iconfont-btn"></span>
                     </div>
@@ -304,26 +458,26 @@
                 <h6 class="mbr-item-subtitle mbr-fonts-style align-center mb-0 mt-3 display-7">Australia</h6>
             </div>
             <div class="col-12 col-md-6 col-lg-3 item gallery-image">
-                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#uKn73CDgqg-modal" data-bs-target="#uKn73CDgqg-modal">
-                    <img class="w-100" src="assets/images/pxl-20221022-143857153.night2-1158x1544.jpg" alt="" data-slide-to="5" data-bs-slide-to="5" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg">
+                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#v24YIOajJl-modal" data-bs-target="#v24YIOajJl-modal">
+                    <img class="w-100" src="assets/images/pxl-20221022-143857153.night2-1158x1544.jpg" alt="" data-slide-to="5" data-bs-slide-to="5" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl">
                     <div class="icon-wrapper">
                         <span class="mobi-mbri mobi-mbri-search mbr-iconfont mbr-iconfont-btn"></span>
                     </div>
                 </div>
-                <h6 class="mbr-item-subtitle mbr-fonts-style align-center mb-0 mt-3 display-7">Europe (Berlin has a special place in my heart)</h6>
+                <h6 class="mbr-item-subtitle mbr-fonts-style align-center mb-0 mt-3 display-7">Europe</h6>
             </div>
             <div class="col-12 col-md-6 col-lg-3 item gallery-image">
-                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#uKn73CDgqg-modal" data-bs-target="#uKn73CDgqg-modal">
-                    <img class="w-100" src="assets/images/pxl-20231202-2137479212-1158x872.jpg" alt="" data-slide-to="6" data-bs-slide-to="6" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg">
+                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#v24YIOajJl-modal" data-bs-target="#v24YIOajJl-modal">
+                    <img class="w-100" src="assets/images/pxl-20231202-2137479212-1158x872.jpg" alt="" data-slide-to="6" data-bs-slide-to="6" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl">
                     <div class="icon-wrapper">
                         <span class="mobi-mbri mobi-mbri-search mbr-iconfont mbr-iconfont-btn"></span>
                     </div>
                 </div>
-                <h6 class="mbr-item-subtitle mbr-fonts-style align-center mb-0 mt-3 display-7">North America (okay too many to choose from)</h6>
+                <h6 class="mbr-item-subtitle mbr-fonts-style align-center mb-0 mt-3 display-7">North America</h6>
             </div>
             <div class="col-12 col-md-6 col-lg-3 item gallery-image">
-                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#uKn73CDgqg-modal" data-bs-target="#uKn73CDgqg-modal">
-                    <img class="w-100" src="assets/images/pxl-20240304-1358526532-1158x872.jpg" alt="" data-slide-to="7" data-bs-slide-to="7" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg">
+                <div class="item-wrapper mb-3" data-toggle="modal" data-bs-toggle="modal" data-target="#v24YIOajJl-modal" data-bs-target="#v24YIOajJl-modal">
+                    <img class="w-100" src="assets/images/pxl-20240304-1358526532-1158x872.jpg" alt="" data-slide-to="7" data-bs-slide-to="7" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl">
                     <div class="icon-wrapper">
                         <span class="mobi-mbri mobi-mbri-search mbr-iconfont mbr-iconfont-btn"></span>
                     </div>
@@ -332,11 +486,11 @@
             </div>
         </div>
 
-        <div class="modal mbr-slider" tabindex="-1" role="dialog" aria-hidden="true" id="uKn73CDgqg-modal">
+        <div class="modal mbr-slider" tabindex="-1" role="dialog" aria-hidden="true" id="v24YIOajJl-modal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <div class="carousel slide carousel-fade" data-pause="false" data-bs-pause="false" id="lb-uKn73CDgqg" data-ride="carousel" data-bs-ride="carousel" data-interval="5000" data-bs-interval="5000">
+                        <div class="carousel slide carousel-fade" data-pause="false" data-bs-pause="false" id="lb-v24YIOajJl" data-ride="carousel" data-bs-ride="carousel" data-interval="5000" data-bs-interval="5000">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <img class="d-block w-100" src="assets/images/pxl-20240307-125026276-2-1158x810.jpg" alt="Mobirise Website Builder">
@@ -364,22 +518,22 @@
                                 </div>
                             </div>
                             <ol class="carousel-indicators">
-                                <li data-slide-to="0" data-bs-slide-to="0" class="active" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg"></li>
-                                <li data-slide-to="1" data-bs-slide-to="1" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg"></li>
-                                <li data-slide-to="2" data-bs-slide-to="2" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg"></li>
-                                <li data-slide-to="3" data-bs-slide-to="3" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg"></li>
-                                <li data-slide-to="4" data-bs-slide-to="4" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg"></li>
-                                <li data-slide-to="5" data-bs-slide-to="5" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg"></li>
-                                <li data-slide-to="6" data-bs-slide-to="6" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg"></li>
-                                <li data-slide-to="7" data-bs-slide-to="7" data-target="#lb-uKn73CDgqg" data-bs-target="#lb-uKn73CDgqg"></li>
+                                <li data-slide-to="0" data-bs-slide-to="0" class="active" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl"></li>
+                                <li data-slide-to="1" data-bs-slide-to="1" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl"></li>
+                                <li data-slide-to="2" data-bs-slide-to="2" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl"></li>
+                                <li data-slide-to="3" data-bs-slide-to="3" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl"></li>
+                                <li data-slide-to="4" data-bs-slide-to="4" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl"></li>
+                                <li data-slide-to="5" data-bs-slide-to="5" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl"></li>
+                                <li data-slide-to="6" data-bs-slide-to="6" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl"></li>
+                                <li data-slide-to="7" data-bs-slide-to="7" data-target="#lb-v24YIOajJl" data-bs-target="#lb-v24YIOajJl"></li>
                             </ol>
                             <a role="button" href="" class="close" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
                             </a>
-                            <a class="carousel-control-prev carousel-control" role="button" data-slide="prev" data-bs-slide="prev" href="#lb-uKn73CDgqg">
+                            <a class="carousel-control-prev carousel-control" role="button" data-slide="prev" data-bs-slide="prev" href="#lb-v24YIOajJl">
                                 <span class="mobi-mbri mobi-mbri-arrow-prev" aria-hidden="true"></span>
                                 <span class="sr-only visually-hidden">Previous</span>
                             </a>
-                            <a class="carousel-control-next carousel-control" role="button" data-slide="next" data-bs-slide="next" href="#lb-uKn73CDgqg">
+                            <a class="carousel-control-next carousel-control" role="button" data-slide="next" data-bs-slide="next" href="#lb-v24YIOajJl">
                                 <span class="mobi-mbri mobi-mbri-arrow-next" aria-hidden="true"></span>
                                 <span class="sr-only visually-hidden">Next</span>
                             </a>
@@ -389,6 +543,168 @@
             </div>
         </div>
     </div>
+</section>
+
+<section data-bs-version="5.1" class="features017 mbr-embla cid-v24QUd21Pr" id="features017-2d">
+
+
+	<div class="position-relative">
+		<div class="container-fluid">
+			<div class="row justify-content-center">
+				<div class="col-12 content-head">
+					<div class="mbr-section-head mb-5">
+
+						<h5 class="mbr-section-subtitle mbr-fonts-style align-center mb-0 mt-4 display-7"><strong>
+							2025 Shenanigans</strong></h5>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="embla" data-skip-snaps="true" data-align="center" data-contain-scroll="trimSnaps" data-auto-play-interval="5" data-draggable="true">
+			<div class="embla__viewport container-fluid">
+				<div class="embla__container">
+					<div class="embla__slide slider-image item active" style="margin-left: 1rem; margin-right: 1rem;">
+						<div class="slide-content">
+							<div class="item-img">
+								<div class="item-wrapper">
+									<img src="assets/images/pxl-20250125-0722079662-600x797.jpg" alt="" title="" data-slide-to="0" data-bs-slide-to="0">
+								</div>
+							</div>
+							<div class="item-content">
+
+								<h6 class="item-subtitle mbr-fonts-style mt-1 display-7">
+									Zermatt</h6>
+
+							</div>
+
+
+						</div>
+					</div>
+					<div class="embla__slide slider-image item" style="margin-left: 1rem; margin-right: 1rem;">
+						<div class="slide-content">
+							<div class="item-img">
+								<div class="item-wrapper">
+									<img src="assets/images/pxl-20250510-1801171132-600x797.jpg" alt="" title="" data-slide-to="1" data-bs-slide-to="1">
+								</div>
+							</div>
+							<div class="item-content">
+
+								<h6 class="item-subtitle mbr-fonts-style mt-1 display-7">
+									Rome</h6>
+
+							</div>
+
+						</div>
+					</div>
+					<div class="embla__slide slider-image item" style="margin-left: 1rem; margin-right: 1rem;">
+						<div class="slide-content">
+							<div class="item-img">
+								<div class="item-wrapper">
+									<img src="assets/images/snap3-600x343.png" alt="" title="" data-slide-to="2" data-bs-slide-to="2">
+								</div>
+							</div>
+							<div class="item-content">
+
+								<h6 class="item-subtitle mbr-fonts-style mt-1 display-7">
+									Malta<br></h6>
+
+							</div>
+
+						</div>
+					</div>
+					<div class="embla__slide slider-image item" style="margin-left: 1rem; margin-right: 1rem;">
+						<div class="slide-content">
+							<div class="item-img">
+								<div class="item-wrapper">
+									<img src="assets/images/pxl-20250615-1507541362-1200x1691.jpg" alt="" title="" data-slide-to="3" data-bs-slide-to="3">
+								</div>
+							</div>
+							<div class="item-content">
+
+								<h6 class="item-subtitle mbr-fonts-style mt-1 display-7">
+									Le Mans</h6>
+
+							</div>
+
+						</div>
+					</div>
+					<div class="embla__slide slider-image item" style="margin-left: 1rem; margin-right: 1rem;">
+						<div class="slide-content">
+							<div class="item-img">
+								<div class="item-wrapper">
+									<img src="assets/images/pxl-20250319-0041139502-1200x904.jpg" alt="" title="" data-slide-to="4" data-bs-slide-to="4">
+								</div>
+							</div>
+							<div class="item-content">
+
+								<h6 class="item-subtitle mbr-fonts-style mt-1 display-7">
+									Australia</h6>
+
+							</div>
+
+						</div>
+					</div>
+					<div class="embla__slide slider-image item" style="margin-left: 1rem; margin-right: 1rem;">
+						<div class="slide-content">
+							<div class="item-img">
+								<div class="item-wrapper">
+									<img src="assets/images/pxl-20250125-1239120142-1200x904.jpg" alt="" title="" data-slide-to="5" data-bs-slide-to="5">
+								</div>
+							</div>
+							<div class="item-content">
+
+								<h6 class="item-subtitle mbr-fonts-style mt-1 display-7">
+									Zermatt<br></h6>
+
+							</div>
+
+						</div>
+					</div>
+					<div class="embla__slide slider-image item" style="margin-left: 1rem; margin-right: 1rem;">
+						<div class="slide-content">
+							<div class="item-img">
+								<div class="item-wrapper">
+									<img src="assets/images/pxl-20250201-125845759-600x452.jpg" alt="" title="" data-slide-to="6" data-bs-slide-to="6">
+								</div>
+							</div>
+							<div class="item-content">
+
+								<h6 class="item-subtitle mbr-fonts-style mt-1 display-7">
+									Grindelwald<br></h6>
+
+							</div>
+
+						</div>
+					</div><div class="embla__slide slider-image item" style="margin-left: 1rem; margin-right: 1rem;">
+						<div class="slide-content">
+							<div class="item-img">
+								<div class="item-wrapper">
+									<img src="assets/images/pxl-20250321-0433070292-600x827.jpg" alt="" title="" data-slide-to="7" data-bs-slide-to="7">
+								</div>
+							</div>
+							<div class="item-content">
+
+								<h6 class="item-subtitle mbr-fonts-style mt-1 display-7">
+									Australia<br></h6>
+
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<button class="embla__button embla__button--prev">
+				<span class="mobi-mbri mobi-mbri-arrow-prev mbr-iconfont" aria-hidden="true"></span>
+				<span class="sr-only visually-hidden visually-hidden visually-hidden">Previous</span>
+			</button>
+			<button class="embla__button embla__button--next">
+				<span class="mobi-mbri mobi-mbri-arrow-next mbr-iconfont" aria-hidden="true"></span>
+				<span class="sr-only visually-hidden visually-hidden visually-hidden">Next</span>
+			</button>
+		</div>
+	</div>
 </section>
 
 <section data-bs-version="5.1" class="header14 cid-uyVpA1Q0Tx mbr-parallax-background" id="header14-20">
@@ -403,7 +719,7 @@
 					<div class="card-box align-center">
 						<h1 class="card-title mbr-fonts-style mb-4 display-2">
 							<strong>The Experience</strong></h1>
-						<p class="mbr-text mbr-fonts-style mb-4 display-7">I have always felt like growth comes from slowly stepping out of your comfort zone. Learn tidbits of new languages. Try new foods. Meet people who aren't like you. Venture like a local, not like a tourist. Time value of money vs. life value of money.&nbsp;</p>
+						<p class="mbr-text mbr-fonts-style mb-4 display-7">I have always felt like growth comes from stepping out of your comfort zone. Learn tidbits of new languages. Try new foods. Meet people who aren't like you. Venture like a local, not like a tourist. Time value of money vs. life value of money.&nbsp;</p>
 
 					</div>
 				</div>
@@ -588,11 +904,11 @@
 
 <section data-bs-version="5.1" class="slider3 cid-uiGSiCV2dn mbr-fullscreen" id="slider03-19">
 
-    <div class="carousel slide carousel-fade" id="uKn73Fmq32" data-ride="carousel" data-bs-ride="carousel" data-interval="5000" data-bs-interval="5000">
+    <div class="carousel slide carousel-fade" id="v24YIUgLJc" data-ride="carousel" data-bs-ride="carousel" data-interval="5000" data-bs-interval="5000">
         <ol class="carousel-indicators">
-            <li data-slide-to="0" data-bs-slide-to="0" class="active" data-target="#uKn73Fmq32" data-bs-target="#uKn73Fmq32"></li><li data-slide-to="1" data-bs-slide-to="1" class="" data-target="#uKn73Fmq32" data-bs-target="#uKn73Fmq32"></li>
-            <li data-slide-to="2" data-bs-slide-to="2" data-target="#uKn73Fmq32" data-bs-target="#uKn73Fmq32"></li><li data-slide-to="3" data-bs-slide-to="3" data-target="#uKn73Fmq32" data-bs-target="#uKn73Fmq32"></li>
-            <li data-slide-to="4" data-bs-slide-to="4" data-target="#uKn73Fmq32" data-bs-target="#uKn73Fmq32"></li><li data-slide-to="5" data-bs-slide-to="5" data-target="#uKn73Fmq32" data-bs-target="#uKn73Fmq32"></li><li data-slide-to="6" data-bs-slide-to="6" data-target="#uKn73Fmq32" data-bs-target="#uKn73Fmq32"></li><li data-slide-to="7" data-bs-slide-to="7" data-target="#uKn73Fmq32" data-bs-target="#uKn73Fmq32"></li><li data-slide-to="8" data-bs-slide-to="8" data-target="#uKn73Fmq32" data-bs-target="#uKn73Fmq32"></li><li data-slide-to="9" data-bs-slide-to="9" data-target="#uKn73Fmq32" data-bs-target="#uKn73Fmq32"></li>
+            <li data-slide-to="0" data-bs-slide-to="0" class="active" data-target="#v24YIUgLJc" data-bs-target="#v24YIUgLJc"></li><li data-slide-to="1" data-bs-slide-to="1" class="" data-target="#v24YIUgLJc" data-bs-target="#v24YIUgLJc"></li>
+            <li data-slide-to="2" data-bs-slide-to="2" data-target="#v24YIUgLJc" data-bs-target="#v24YIUgLJc"></li><li data-slide-to="3" data-bs-slide-to="3" data-target="#v24YIUgLJc" data-bs-target="#v24YIUgLJc"></li>
+            <li data-slide-to="4" data-bs-slide-to="4" data-target="#v24YIUgLJc" data-bs-target="#v24YIUgLJc"></li><li data-slide-to="5" data-bs-slide-to="5" data-target="#v24YIUgLJc" data-bs-target="#v24YIUgLJc"></li><li data-slide-to="6" data-bs-slide-to="6" data-target="#v24YIUgLJc" data-bs-target="#v24YIUgLJc"></li><li data-slide-to="7" data-bs-slide-to="7" data-target="#v24YIUgLJc" data-bs-target="#v24YIUgLJc"></li><li data-slide-to="8" data-bs-slide-to="8" data-target="#v24YIUgLJc" data-bs-target="#v24YIUgLJc"></li><li data-slide-to="9" data-bs-slide-to="9" data-target="#v24YIUgLJc" data-bs-target="#v24YIUgLJc"></li>
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item slider-image item active">
@@ -709,11 +1025,11 @@
                 </div>
             </div>
         </div>
-        <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" data-bs-slide="prev" href="#uKn73Fmq32">
+        <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" data-bs-slide="prev" href="#v24YIUgLJc">
             <span class="mobi-mbri mobi-mbri-arrow-prev" aria-hidden="true"></span>
             <span class="sr-only visually-hidden">Previous</span>
         </a>
-        <a class="carousel-control carousel-control-next" role="button" data-slide="next" data-bs-slide="next" href="#uKn73Fmq32">
+        <a class="carousel-control carousel-control-next" role="button" data-slide="next" data-bs-slide="next" href="#v24YIUgLJc">
             <span class="mobi-mbri mobi-mbri-arrow-next" aria-hidden="true"></span>
             <span class="sr-only visually-hidden">Next</span>
         </a>
@@ -743,11 +1059,11 @@
 
 <section data-bs-version="5.1" class="slider3 cid-uyVv8DUiUw mbr-fullscreen" id="slider03-24">
 
-    <div class="carousel slide carousel-fade" id="uKn73GuIty" data-ride="carousel" data-bs-ride="carousel" data-interval="5000" data-bs-interval="5000">
+    <div class="carousel slide carousel-fade" id="v24YIW7CRF" data-ride="carousel" data-bs-ride="carousel" data-interval="5000" data-bs-interval="5000">
         <ol class="carousel-indicators">
-            <li data-slide-to="0" data-bs-slide-to="0" class="active" data-target="#uKn73GuIty" data-bs-target="#uKn73GuIty"></li><li data-slide-to="1" data-bs-slide-to="1" class="" data-target="#uKn73GuIty" data-bs-target="#uKn73GuIty"></li>
-            <li data-slide-to="2" data-bs-slide-to="2" data-target="#uKn73GuIty" data-bs-target="#uKn73GuIty"></li><li data-slide-to="3" data-bs-slide-to="3" data-target="#uKn73GuIty" data-bs-target="#uKn73GuIty"></li><li data-slide-to="4" data-bs-slide-to="4" data-target="#uKn73GuIty" data-bs-target="#uKn73GuIty"></li>
-            <li data-slide-to="5" data-bs-slide-to="5" data-target="#uKn73GuIty" data-bs-target="#uKn73GuIty"></li><li data-slide-to="6" data-bs-slide-to="6" data-target="#uKn73GuIty" data-bs-target="#uKn73GuIty"></li><li data-slide-to="7" data-bs-slide-to="7" data-target="#uKn73GuIty" data-bs-target="#uKn73GuIty"></li><li data-slide-to="8" data-bs-slide-to="8" data-target="#uKn73GuIty" data-bs-target="#uKn73GuIty"></li>
+            <li data-slide-to="0" data-bs-slide-to="0" class="active" data-target="#v24YIW7CRF" data-bs-target="#v24YIW7CRF"></li><li data-slide-to="1" data-bs-slide-to="1" class="" data-target="#v24YIW7CRF" data-bs-target="#v24YIW7CRF"></li>
+            <li data-slide-to="2" data-bs-slide-to="2" data-target="#v24YIW7CRF" data-bs-target="#v24YIW7CRF"></li><li data-slide-to="3" data-bs-slide-to="3" data-target="#v24YIW7CRF" data-bs-target="#v24YIW7CRF"></li><li data-slide-to="4" data-bs-slide-to="4" data-target="#v24YIW7CRF" data-bs-target="#v24YIW7CRF"></li>
+            <li data-slide-to="5" data-bs-slide-to="5" data-target="#v24YIW7CRF" data-bs-target="#v24YIW7CRF"></li><li data-slide-to="6" data-bs-slide-to="6" data-target="#v24YIW7CRF" data-bs-target="#v24YIW7CRF"></li><li data-slide-to="7" data-bs-slide-to="7" data-target="#v24YIW7CRF" data-bs-target="#v24YIW7CRF"></li><li data-slide-to="8" data-bs-slide-to="8" data-target="#v24YIW7CRF" data-bs-target="#v24YIW7CRF"></li>
         </ol>
         <div class="carousel-inner">
 
@@ -853,11 +1169,11 @@
                 </div>
             </div>
         </div>
-        <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" data-bs-slide="prev" href="#uKn73GuIty">
+        <a class="carousel-control carousel-control-prev" role="button" data-slide="prev" data-bs-slide="prev" href="#v24YIW7CRF">
             <span class="mobi-mbri mobi-mbri-arrow-prev" aria-hidden="true"></span>
             <span class="sr-only visually-hidden">Previous</span>
         </a>
-        <a class="carousel-control carousel-control-next" role="button" data-slide="next" data-bs-slide="next" href="#uKn73GuIty">
+        <a class="carousel-control carousel-control-next" role="button" data-slide="next" data-bs-slide="next" href="#v24YIW7CRF">
             <span class="mobi-mbri mobi-mbri-arrow-next" aria-hidden="true"></span>
             <span class="sr-only visually-hidden">Next</span>
         </a>
@@ -876,11 +1192,11 @@
 
 
             <div class="col-12 mt-4">
-                <p class="mbr-fonts-style copyright display-7">© Morgan 2016-2025. All Rights Reserved.</p>
+                <p class="mbr-fonts-style copyright display-7">© Morgan 2016-2026. All Rights Reserved.</p>
             </div>
         </div>
     </div>
-</section><section class="display-7" style="padding: 0;align-items: center;justify-content: center;flex-wrap: wrap;    align-content: center;display: flex;position: relative;height: 4rem;"></section>  <script src="assets/parallax/jarallax.js"></script>  <script src="assets/smoothscroll/smooth-scroll.js"></script>  <script src="assets/ytplayer/index.js"></script>  <script src="assets/dropdown/js/navbar-dropdown.js"></script>  <script src="assets/scrollgallery/scroll-gallery.js"></script>  <script src="assets/theme/js/script.js"></script>
+<script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>  <script src="assets/parallax/jarallax.js"></script>  <script src="assets/smoothscroll/smooth-scroll.js"></script>  <script src="assets/ytplayer/index.js"></script>  <script src="assets/dropdown/js/navbar-dropdown.js"></script>  <script src="assets/scrollgallery/scroll-gallery.js"></script>  <script src="assets/embla/embla.min.js"></script>  <script src="assets/embla/script.js"></script>  <script src="assets/theme/js/script.js"></script>  
 
 
  <div id="scrollToTop" class="scrollToTop mbr-arrow-up"><a style="text-align: center;"><i class="mbr-arrow-up-icon mbr-arrow-up-icon-cm cm-icon cm-icon-smallarrow-up"></i></a></div>
