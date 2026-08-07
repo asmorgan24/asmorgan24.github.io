@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FUN Robot Kinematics - Toy Story ANDY Tracing</title>
+  <style>
+    /* Reset & Fullscreen Demo Styling */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #0f172a; /* Slate dark background */
+      color: #ffffff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Container Box for Canvas */
+    .kinematics-widget-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      height: 500px;
+      border-radius: 1.5rem;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+    }
+
+    /* HTML5 Canvas overlay */
+    #kinematicsCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Embedded Label Overlay */
+    .widget-overlay-label {
+      position: absolute;
+      top: 1.2rem;
+      left: 1.5rem;
+      pointer-events: none;
+    }
+
+    .widget-overlay-label h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #f97316;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .widget-overlay-label p {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Kinematics Interactive Widget Container -->
+  <div class="kinematics-widget-container">
+    <div class="widget-overlay-label">
+      <h2>3-Link Manipulator</h2>
+      <p>IK • Tracing Toy Story A И D Y</p>
+    </div>
+    <canvas id="kinematicsCanvas"></canvas>
+  </div>
+
+  <!-- STANDALONE JS KINEMATICS ENGINE -->
+  <script>
+    /**
+     * Standalone 2D Compliant Robot Arm Inverse Kinematics Engine
+     * Traces Toy Story style handwritten "A И D Y" with pen-up transition strokes
+     * and an extended illuminated hold pause.
+     */
+    (function RobotKinematicsEngine() {
+      const canvas = document.getElementById('kinematicsCanvas');
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      let width, height;
+
+      // Kinematic Arm Parameters
+      const numLinks = 3;
+      const linkLengths = [160, 130, 100]; // Arm segment lengths in pixels
+      let joints = [];
+      let target = { x: 0, y: 0 };
+      let baseOrigin = { x: 0, y: 0 };
+      let mouseActive = false;
+
+      // Stroke trajectory state
+      let pathStrokes = [];
+      let strokeIdx = 0;
+      let pointProgress = 0;
+      let isPausing = false;
+      let pauseTimer = 0;
+
+      /**
+       * Generates vector keypoints for Toy Story style handwritten "A И D Y"
+       */
+      function generateToyStoryStrokes(offsetX, offsetY, scale) {
+        const strokes = [];
+
+        function addLine(x1, y1, x2, y2, steps = 45) {
+          const pts = [];
+          for (let i = 0; i <= steps; i++) {
+            const t = i / steps;
+            const wobble = Math.sin(t * Math.PI) * 1.5;
+            pts.push({
+              x: offsetX + (x1 + (x2 - x1) * t + wobble * 0.4) * scale,
+              y: offsetY + (y1 + (y2 - y1) * t) * scale
+            });
+          }
+          strokes.push({ points: pts, isDrawing: true });
+        }
+
+        function addArc(cx, cy, rx, ry, startAngle, endAngle, steps = 60) {
+          const pts = [];
+          for (let i = 0; i <= steps; i++) {
+            const t = i / steps;
+            const angle = startAngle + (endAngle - startAngle) * t;
+            pts.push({
+              x: offsetX + (cx + Math.cos(angle) * rx) * scale,
+              y: offsetY + (cy + Math.sin(angle) * ry) * scale
+            });
+          }
+          strokes.push({ points: pts, isDrawing: true });
+        }
+
+        function addTravel(x1, y1, x2, y2, steps = 25) {
+          const pts = [];
+          for (let i = 0; i <= steps; i++) {
+            const t = i / steps;
+            pts.push({
+              x: offsetX + (x1 + (x2 - x1) * t) * scale,
+              y: offsetY + (y1 + (y2 - y1) * t) * scale
+            });
+          }
+          strokes.push({ points: pts, isDrawing: false }); // Pen-Up move!
+        }
+
+        // --- Letter A ---
+        addLine(5, 95, 28, 8);
+        addLine(28, 8, 56, 98);
+        addTravel(56, 98, 12, 58);
+        addLine(12, 58, 48, 54);
+
+        // --- Travel to И ---
+        addTravel(48, 54, 75, 94);
+
+        // --- Letter И (Toy Story Backwards N) ---
+        addLine(75, 94, 72, 10);
+        addLine(75, 94, 118, 8);
+        addTravel(118, 8, 118, 8);
+        addLine(118, 8, 122, 95);
+
+        // --- Travel to D ---
+        addTravel(122, 95, 142, 6);
+
+        // --- Letter D ---
+        addLine(142, 6, 145, 96);
+        addTravel(145, 96, 145, 6);
+        addArc(145, 51, 44, 45, -Math.PI / 2, Math.PI / 2);
+
+        // --- Travel to Y ---
+        addTravel(189, 51, 202, 10);
+
+        // --- Letter Y ---
+        addLine(202, 10, 222, 50);
+        addTravel(222, 50, 250, 12);
+        addLine(250, 12, 222, 50);
+        addLine(222, 50, 220, 85);
+        addLine(220, 85, 212, 98);
+
+        return strokes;
+      }
+
+      function resize() {
+        width = canvas.width = canvas.parentElement.clientWidth;
+        height = canvas.height = canvas.parentElement.clientHeight;
+
+        if (width > 768) {
+          baseOrigin.x = width * 0.88;
+          baseOrigin.y = height * 0.65;
+          pathStrokes = generateToyStoryStrokes(baseOrigin.x - 390, baseOrigin.y - 130, Math.min(width / 800, 1.15));
+        } else {
+          baseOrigin.x = width * 0.85;
+          baseOrigin.y = height * 0.75;
+          pathStrokes = generateToyStoryStrokes(baseOrigin.x - 270, baseOrigin.y - 140, 0.78);
+        }
+
+        strokeIdx = 0;
+        pointProgress = 0;
+        isPausing = false;
+        pauseTimer = 0;
+
+        if (!mouseActive && pathStrokes.length > 0) {
+          target.x = pathStrokes[0].points[0].x;
+          target.y = pathStrokes[0].points[0].y;
+        }
+
+        initJoints();
+      }
+
+      function initJoints() {
+        joints = [{ x: baseOrigin.x, y: baseOrigin.y }];
+        let curX = baseOrigin.x;
+        let curY = baseOrigin.y;
+
+        for (let i = 0; i < numLinks; i++) {
+          curX -= linkLengths[i] * 0.7;
+          curY -= linkLengths[i] * 0.3;
+          joints.push({ x: curX, y: curY });
+        }
+      }
+
+      /**
+       * Inverse Kinematics (FABRIK / Damped Spring IK) algorithm
+       */
+      function updateIK() {
+        if (!mouseActive && pathStrokes.length > 0) {
+          if (isPausing) {
+            pauseTimer++;
+            if (pauseTimer > 360) { // 6-second hold (360 frames @ 60fps)
+              isPausing = false;
+              pauseTimer = 0;
+              strokeIdx = 0;
+              pointProgress = 0;
+            }
+          } else {
+            pointProgress += 0.4; // Controlled slow-motion drawing speed
+            const curLen = pathStrokes[strokeIdx].points.length;
+            if (pointProgress >= curLen) {
+              pointProgress = 0;
+              strokeIdx++;
+              if (strokeIdx >= pathStrokes.length) {
+                strokeIdx = pathStrokes.length - 1;
+                pointProgress = pathStrokes[strokeIdx].points.length - 1;
+                isPausing = true;
+              }
+            }
+            const currentPIdx = Math.min(Math.floor(pointProgress), pathStrokes[strokeIdx].points.length - 1);
+            target.x = pathStrokes[strokeIdx].points[currentPIdx].x;
+            target.y = pathStrokes[strokeIdx].points[currentPIdx].y;
+          }
+        }
+
+        // Compliance Spring-Damper Interpolation
+        joints[numLinks] = {
+          x: joints[numLinks].x + (target.x - joints[numLinks].x) * 0.08,
+          y: joints[numLinks].y + (target.y - joints[numLinks].y) * 0.08
+        };
+
+        // Backward Pass
+        for (let i = numLinks - 1; i >= 0; i--) {
+          const dx = joints[i + 1].x - joints[i].x;
+          const dy = joints[i + 1].y - joints[i].y;
+          const dist = Math.hypot(dx, dy) || 1;
+          const factor = linkLengths[i] / dist;
+          joints[i].x = joints[i + 1].x - dx * factor;
+          joints[i].y = joints[i + 1].y - dy * factor;
+        }
+
+        // Forward Pass (Anchor Base)
+        joints[0].x = baseOrigin.x;
+        joints[0].y = baseOrigin.y;
+        for (let i = 0; i < numLinks; i++) {
+          const dx = joints[i + 1].x - joints[i].x;
+          const dy = joints[i + 1].y - joints[i].y;
+          const dist = Math.hypot(dx, dy) || 1;
+          const factor = linkLengths[i] / dist;
+          joints[i + 1].x = joints[i].x + dx * factor;
+          joints[i + 1].y = joints[i].y + dy * factor;
+        }
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, width, height);
+
+        // Render Stroke Paths
+        if (pathStrokes.length > 0) {
+          // Background guidelines
+          pathStrokes.forEach(stroke => {
+            if (stroke.isDrawing && stroke.points.length > 1) {
+              ctx.beginPath();
+              ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+              for (let i = 1; i < stroke.points.length; i++) {
+                ctx.lineTo(stroke.points[i].x, stroke.points[i].y);
+              }
+              ctx.strokeStyle = 'rgba(255, 255, 255, 0.18)';
+              ctx.lineWidth = 3;
+              ctx.stroke();
+            }
+          });
+
+          // Active glowing amber strokes
+          for (let s = 0; s <= strokeIdx; s++) {
+            const stroke = pathStrokes[s];
+            if (!stroke.isDrawing) continue;
+
+            ctx.beginPath();
+            const limit = (s === strokeIdx && !isPausing) ? Math.floor(pointProgress) : stroke.points.length - 1;
+            if (limit > 0) {
+              ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+              for (let p = 1; p <= limit; p++) {
+                ctx.lineTo(stroke.points[p].x, stroke.points[p].y);
+              }
+              ctx.strokeStyle = '#f97316';
+              ctx.lineWidth = 5;
+              ctx.lineCap = 'round';
+              ctx.shadowColor = 'rgba(249, 115, 22, 0.65)';
+              ctx.shadowBlur = isPausing ? 14 : 7;
+              ctx.stroke();
+              ctx.shadowBlur = 0;
+            }
+          }
+        }
+
+        // Render Robot Linkage Arm
+        ctx.beginPath();
+        ctx.moveTo(joints[0].x, joints[0].y);
+        for (let i = 1; i <= numLinks; i++) {
+          ctx.lineTo(joints[i].x, joints[i].y);
+        }
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.lineWidth = 9;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(joints[0].x, joints[0].y);
+        for (let i = 1; i <= numLinks; i++) {
+          ctx.lineTo(joints[i].x, joints[i].y);
+        }
+        ctx.strokeStyle = '#2563eb'; // Electric blue inner arm
+        ctx.lineWidth = 3.5;
+        ctx.stroke();
+
+        // Render Joints
+        for (let i = 0; i <= numLinks; i++) {
+          ctx.fillStyle = i === 0 ? '#0f172a' : (i === numLinks ? '#ea580c' : '#ffffff');
+          ctx.beginPath();
+          ctx.arc(joints[i].x, joints[i].y, i === numLinks ? 9 : (i === 0 ? 15 : 7), 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+        }
+      }
+
+      function loop() {
+        updateIK();
+        draw();
+        requestAnimationFrame(loop);
+      }
+
+      window.addEventListener('resize', resize);
+
+      // Interactive mouse pointer tracking
+      const container = canvas.parentElement;
+      container.addEventListener('pointermove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        target.x = e.clientX - rect.left;
+        target.y = e.clientY - rect.top;
+        mouseActive = true;
+      });
+
+      container.addEventListener('pointerleave', () => {
+        mouseActive = false;
+      });
+
+      resize();
+      loop();
+    })();
+  </script>
+</body>
+</html>
